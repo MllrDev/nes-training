@@ -6,11 +6,12 @@ using NUnit.Framework;
 using SimpleEventStore.Domain;
 using SimpleEventStore.Domain.Events;
 using SimpleEventStore.Eventstore;
+using SharpTestsEx;
 
 namespace SimpleEventStore.Tests
 {
     [TestFixture]
-    public class ItemTests
+    public class AnagraficaArticoloTests
     {
         [Test]
         public void censisci_AnagraficaArticolo()
@@ -19,6 +20,41 @@ namespace SimpleEventStore.Tests
             item.Censisci(TestConfig.Id, "001", "SSD Crucial M4 256GB", "NR", 50);
 
             Assert.AreEqual(1, item.Events.Count);
+        }
+
+        [Test]
+        public void Scarica_diminuisce_la_GiacenzaAttuale_se_disponibile()
+        {
+            var stato = new AnagraficaArticolo.StatoAnagraficaArticolo()
+            {
+                Disabilitato = false,
+                GiacenzaAttuale = 20,
+                ScortaMinima = 20
+            };
+            var sut = new AnagraficaArticolo(stato);
+            sut.Scarica(11);
+            Assert.AreEqual(9, sut.stato.GiacenzaAttuale);
+        }
+
+        [Test]
+        public void Scarica_genera_eccezione_se_la_quantità_richiesta_non_è_in_giacenza()
+        {
+            var stato = new AnagraficaArticolo.StatoAnagraficaArticolo()
+            {
+                Disabilitato = false,
+                GiacenzaAttuale = 10,
+                ScortaMinima = 20
+            };
+            var sut = new AnagraficaArticolo(stato);
+            Executing.This(() => sut.Scarica(11))
+                .Should()
+                .Throw<ArgumentException>()
+                .And
+                .ValueOf
+                .ParamName
+                .Should()
+                .Be
+                .EqualTo("quantitàDaScaricare");
         }
 
         [Test]

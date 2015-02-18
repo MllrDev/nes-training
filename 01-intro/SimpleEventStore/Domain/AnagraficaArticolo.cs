@@ -6,7 +6,7 @@ namespace SimpleEventStore.Domain
 {
     public class AnagraficaArticolo : AggregateBase
     {
-        private StatoAnagraficaArticolo stato;
+        internal StatoAnagraficaArticolo stato;
 
         public AnagraficaArticolo()
         {
@@ -29,6 +29,10 @@ namespace SimpleEventStore.Domain
             {
                 var e = new ArticoloScaricato(this.Id, quantitàDaScaricare);
                 RaiseEvent(e);
+            }
+            else
+            {
+                throw new ArgumentException("", "quantitàDaScaricare");
             }
         }
 
