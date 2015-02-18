@@ -4,19 +4,19 @@ using SimpleEventStore.Eventstore;
 
 namespace SimpleEventStore.Domain
 {
-    public class Item : AggregateBase
+    public class AnagraficaArticolo : AggregateBase
     {
         private decimal SafetyStockLevel { get; set; }
         internal decimal InStock { get; private set; }
         internal bool Disabled { get; private set; }
 
-        public Item()
+        public AnagraficaArticolo()
         {
         }
 
-        public Item(string id, string code, string description, string uom, decimal safetyStockLevel)
+        public void Censisci(string id, string code, string description, string uom, decimal safetyStockLevel)
         {
-            RaiseEvent(new ItemCreated(id, code, description, uom, safetyStockLevel));
+            RaiseEvent(new AnagraficaArticoloCensita(id, code, description, uom, safetyStockLevel));
         }
 
         public void Disable()
@@ -24,16 +24,16 @@ namespace SimpleEventStore.Domain
             if (Disabled)
                 return;
             
-            RaiseEvent(new ItemDisabled {Id = Id});
+            RaiseEvent(new AnagraficaArticoloDisattivata(Id));
         }
 
-        public void Apply(ItemCreated evt)
+        public void Apply(AnagraficaArticoloCensita evt)
         {
             Id = evt.Id;
             SafetyStockLevel = evt.SafetyStockLevel;
         }
 
-        public void Apply(ItemDisabled evt)
+        public void Apply(AnagraficaArticoloDisattivata evt)
         {
             Disabled = true;
         }

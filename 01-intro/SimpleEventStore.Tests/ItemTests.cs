@@ -13,9 +13,10 @@ namespace SimpleEventStore.Tests
     public class ItemTests
     {
         [Test]
-        public void create_item()
+        public void censisci_AnagraficaArticolo()
         {
-            var item = new Item(TestConfig.Id, "001", "SSD Crucial M4 256GB", "NR", 50);
+            var item = new AnagraficaArticolo();
+            item.Censisci(TestConfig.Id, "001", "SSD Crucial M4 256GB", "NR", 50);
 
             Assert.AreEqual(1, item.Events.Count);
         }
@@ -23,7 +24,8 @@ namespace SimpleEventStore.Tests
         [Test]
         public void save_item_to_eventStream()
         {
-            var item = new Item(TestConfig.Id, "001", "SSD Crucial M4 256GB", "NR", 100);
+            var item = new AnagraficaArticolo();
+            item.Censisci(TestConfig.Id, "001", "SSD Crucial M4 256GB", "NR", 100);
             var stream = new EventStream();
             item.Save(stream);
 
@@ -39,12 +41,12 @@ namespace SimpleEventStore.Tests
                                  Events =
                                      new List<object>(new[]
 						                 {
-						                     new ItemCreated(TestConfig.Id, "001", "SSD Crucial M4 256GB", "NR", 100)
+						                     new AnagraficaArticoloCensita(TestConfig.Id, "001", "SSD Crucial M4 256GB", "NR", 100)
 						                 }),
                                  Version = 1
                              };
 
-            var item = AggregateBase.Load<Item>(stream);
+            var item = AggregateBase.Load<AnagraficaArticolo>(stream);
 
             Assert.AreEqual(1, item.Version);
             Assert.AreEqual(TestConfig.Id, item.Id);
@@ -66,7 +68,7 @@ namespace SimpleEventStore.Tests
             if (File.Exists(fname))
                 File.Delete(fname);
 
-            var item = new Item(TestConfig.Id, "001", "SSD Crucial M4 256GB", "NR", 100);
+            var item = new AnagraficaArticolo(); //AnagraficaArticolo(TestConfig.Id, "001", "SSD Crucial M4 256GB", "NR", 100);
 
             // Act
             repository.Save(item);
@@ -74,14 +76,14 @@ namespace SimpleEventStore.Tests
             // Assert
             Assert.IsTrue(File.Exists(fname));
             Assert.IsNotNull(dispatchedEvent);
-            Assert.IsTrue(dispatchedEvent is ItemCreated);
+            Assert.IsTrue(dispatchedEvent is AnagraficaArticoloCensita);
         }
 
         [Test]
         public void load_from_repository()
         {
             var repository = new Repository(TestConfig.PreloadedStore);
-            var item = repository.GetById<Item>(TestConfig.Id);
+            var item = repository.GetById<AnagraficaArticolo>(TestConfig.Id);
 
             Assert.IsNotNull(item);
             Assert.AreEqual(TestConfig.Id, item.Id);
@@ -93,7 +95,7 @@ namespace SimpleEventStore.Tests
         [Test]
         public void create_a_stream_with_few_events()
         {
-            var item = new Item(TestConfig.Id, "SN0001", "Snacks", "NR", 100);
+            var item = new AnagraficaArticolo(); // AnagraficaArticolo(TestConfig.Id, "SN0001", "Snacks", "NR", 100);
 
             item.Disable();
             Assert.IsTrue(item.Disabled);

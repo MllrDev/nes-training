@@ -44,10 +44,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Domain\Events\ItemDisabled.cs" />
+    <Compile Include="Domain\Events\AnagraficaArticoloDisattivata.cs" />
     <Compile Include="Eventstore\AggregateBase.cs" />
-    <Compile Include="Domain\Item.cs" />
-    <Compile Include="Domain\Events\ItemCreated.cs" />
+    <Compile Include="Domain\AnagraficaArticolo.cs" />
+    <Compile Include="Domain\Events\AnagraficaArticoloCensita.cs" />
     <Compile Include="Eventstore\EventStream.cs" />
     <Compile Include="Eventstore\Repository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
