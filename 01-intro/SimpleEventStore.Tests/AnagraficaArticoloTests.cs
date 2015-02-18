@@ -116,6 +116,36 @@ namespace SimpleEventStore.Tests
             Assert.IsTrue(dispatchedEvent is AnagraficaArticoloCensita);
         }
 
+        [Test]
+        public void create_projections()
+        {
+            var projection = new SimpleEventStore.Query.AnagraficaArticolo();
+            // Arrange
+            var dispatcher = new Action<object>((evt) =>
+            {
+                var dispatchedEvent = evt as AnagraficaArticoloCensita;
+                if(evt!=null)
+                {
+                    projection.Code = dispatchedEvent.Code;
+                    projection.Description = dispatchedEvent.Description;
+                }
+            });
+
+            var repository = new Repository(eventsDispatcher: dispatcher);
+
+            var code = "001";
+            var description = "SSD Crucial M4 256GB";
+            var item = new AnagraficaArticolo();
+            item.Censisci(TestConfig.Id, code, description, "NR", 100);
+
+            // Act
+            repository.Save(item);
+
+            // Assert
+            Assert.AreEqual(code, projection.Code);
+            Assert.AreEqual(description, projection.Description);
+        }
+
         //[Test]
         //public void load_from_repository()
         //{
