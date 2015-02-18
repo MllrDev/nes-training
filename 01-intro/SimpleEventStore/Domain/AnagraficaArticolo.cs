@@ -6,12 +6,16 @@ namespace SimpleEventStore.Domain
 {
     public class AnagraficaArticolo : AggregateBase
     {
-        private decimal SafetyStockLevel { get; set; }
-        internal decimal InStock { get; private set; }
-        internal bool Disabled { get; private set; }
+        private StatoAnagraficaArticolo stato;
 
         public AnagraficaArticolo()
         {
+            stato = new StatoAnagraficaArticolo();
+        }
+
+        public AnagraficaArticolo(StatoAnagraficaArticolo stato)
+        {
+            this.stato = stato;
         }
 
         public void Censisci(string id, string code, string description, string uom, decimal safetyStockLevel)
@@ -19,9 +23,18 @@ namespace SimpleEventStore.Domain
             RaiseEvent(new AnagraficaArticoloCensita(id, code, description, uom, safetyStockLevel));
         }
 
+        public void Scarica(int quantitàDaScaricare)
+        { 
+            if(quantitàDaScaricare <= this.stato.GiacenzaAttuale)
+            {
+                var e = new ArticoloScaricato(this.Id, quantitàDaScaricare);
+                RaiseEvent(e);
+            }
+        }
+
         public void Disable()
         {
-            if (Disabled)
+            if (stato.Disabilitato)
                 return;
             
             RaiseEvent(new AnagraficaArticoloDisattivata(Id));
@@ -30,12 +43,24 @@ namespace SimpleEventStore.Domain
         public void Apply(AnagraficaArticoloCensita evt)
         {
             Id = evt.Id;
-            SafetyStockLevel = evt.SafetyStockLevel;
+            stato.ScortaMinima = evt.SafetyStockLevel;
+        }
+
+        public void Apply(ArticoloScaricato evt)
+        {
+            this.stato.GiacenzaAttuale -= evt.QuantitàScaricata;
         }
 
         public void Apply(AnagraficaArticoloDisattivata evt)
         {
-            Disabled = true;
+            stato.Disabilitato = true;
+        }
+
+        public class StatoAnagraficaArticolo
+        {
+            public decimal ScortaMinima { get; set; }
+            public bool Disabilitato { get; set; }
+            public int GiacenzaAttuale { get; set; }
         }
     }
 }

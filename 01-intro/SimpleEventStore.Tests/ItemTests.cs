@@ -79,31 +79,31 @@ namespace SimpleEventStore.Tests
             Assert.IsTrue(dispatchedEvent is AnagraficaArticoloCensita);
         }
 
-        [Test]
-        public void load_from_repository()
-        {
-            var repository = new Repository(TestConfig.PreloadedStore);
-            var item = repository.GetById<AnagraficaArticolo>(TestConfig.Id);
+        //[Test]
+        //public void load_from_repository()
+        //{
+        //    var repository = new Repository(TestConfig.PreloadedStore);
+        //    var item = repository.GetById<AnagraficaArticolo>(TestConfig.Id);
 
-            Assert.IsNotNull(item);
-            Assert.AreEqual(TestConfig.Id, item.Id);
+        //    Assert.IsNotNull(item);
+        //    Assert.AreEqual(TestConfig.Id, item.Id);
 
-            Assert.AreEqual(0, item.InStock);
-            Assert.IsTrue(item.Disabled);
-        }
+        //    Assert.AreEqual(0, item.InStock);
+        //    Assert.IsTrue(item.Disabled);
+        //}
 
-        [Test]
-        public void create_a_stream_with_few_events()
-        {
-            var item = new AnagraficaArticolo(); // AnagraficaArticolo(TestConfig.Id, "SN0001", "Snacks", "NR", 100);
+        //[Test]
+        //public void create_a_stream_with_few_events()
+        //{
+        //    var item = new AnagraficaArticolo(); // AnagraficaArticolo(TestConfig.Id, "SN0001", "Snacks", "NR", 100);
 
-            item.Disable();
-            Assert.IsTrue(item.Disabled);
+        //    item.Disable();
+        //    Assert.IsTrue(item.Disabled);
 
-            var repository = new Repository(TestConfig.TestStore);
-            repository.Save(item);
+        //    var repository = new Repository(TestConfig.TestStore);
+        //    repository.Save(item);
 
-            // check json file
-        }
+        //    // check json file
+        //}
     }
 }

@@ -45,6 +45,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Domain\Events\AnagraficaArticoloDisattivata.cs" />
+    <Compile Include="Domain\Events\ArticoloScaricato.cs" />
+    <Compile Include="Domain\Events\ScaricoArticoloRifiutato.cs" />
     <Compile Include="Eventstore\AggregateBase.cs" />
     <Compile Include="Domain\AnagraficaArticolo.cs" />
     <Compile Include="Domain\Events\AnagraficaArticoloCensita.cs" />
