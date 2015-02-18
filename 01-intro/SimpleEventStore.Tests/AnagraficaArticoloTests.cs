@@ -104,8 +104,9 @@ namespace SimpleEventStore.Tests
             if (File.Exists(fname))
                 File.Delete(fname);
 
-            var item = new AnagraficaArticolo(); //AnagraficaArticolo(TestConfig.Id, "001", "SSD Crucial M4 256GB", "NR", 100);
-
+            var item = new AnagraficaArticolo();
+            item.Censisci(TestConfig.Id, "001", "SSD Crucial M4 256GB", "NR", 100);
+            
             // Act
             repository.Save(item);
 
