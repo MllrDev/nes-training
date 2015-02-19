@@ -9,19 +9,23 @@ namespace Bookings.Domain.BookingContext
 {
     public class Attrezzatura : AggregateBase
     {
+        public string Codice { get; private set; }
+        public string Descrizione { get; private set; }
+
         public Attrezzatura()
         {
 
         }
 
-        public void Censisci(string codice, string descrizione)
+        public void Censisci(Guid id, string codice, string descrizione)
         {
-            this.RaiseEvent(new AttrezzaturaCensita(codice, descrizione));
+            this.RaiseEvent(new AttrezzaturaCensita(id, codice, descrizione));
         }
 
         public void Apply(AttrezzaturaCensita @event)
         {
-
+            this.Codice = @event.Codice;
+            this.Descrizione = @event.Descrizione;
         }
     }
 }

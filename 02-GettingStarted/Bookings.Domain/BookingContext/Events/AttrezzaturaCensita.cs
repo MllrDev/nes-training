@@ -8,15 +8,15 @@ namespace Bookings.Domain.BookingContext.Events
 {
     public class AttrezzaturaCensita : Event
     {
+        public Guid AttrezzaturaId { get; private set; }
         public string Codice { get; private set; }
         public string Descrizione { get; private set; }
 
-        public AttrezzaturaCensita(string codice, string descrizione)
+        public AttrezzaturaCensita(Guid id, string codice, string descrizione)
         {
+            this.AttrezzaturaId = id;
             this.Codice = codice;
             this.Descrizione = descrizione;
         }
-
-
     }
 }
