@@ -69,6 +69,7 @@
   <ItemGroup>
     <Compile Include="DomainTests\quando_censisco_una_attrezzatura.cs" />
     <Compile Include="DomainTests\quando_la_dismetto.cs" />
+    <Compile Include="DomainTests\se_provo_a_censire_una_attrezzatura_già_censita.cs" />
     <Compile Include="IntegrationTests\Sample\CommandHandlerTest.cs" />
     <Compile Include="IntegrationTests\Sample\CreateItemCommand.cs" />
     <Compile Include="IntegrationTests\Sample\CreateItemCommandHandler.cs" />
