@@ -67,6 +67,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DomainTests\quando_censisco_una_attrezzatura.cs" />
     <Compile Include="DomainTests\quando_la_dismetto.cs" />
     <Compile Include="IntegrationTests\Sample\CommandHandlerTest.cs" />
     <Compile Include="IntegrationTests\Sample\CreateItemCommand.cs" />

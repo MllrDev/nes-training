@@ -54,9 +54,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BookingContenxt\Resource.cs" />
-    <Compile Include="BookingContenxt\Events\ResourceCreated.cs" />
-    <Compile Include="BookingContenxt\Events\ResourceDismissed.cs" />
+    <Compile Include="BookingContext\Attrezzatura.cs" />
+    <Compile Include="BookingContext\Commands\Command.cs" />
+    <Compile Include="BookingContext\Commands\ICommand.cs" />
+    <Compile Include="BookingContext\Events\AttrezzaturaCensita.cs" />
+    <Compile Include="BookingContext\Events\Event.cs" />
+    <Compile Include="BookingContext\Events\IEvent.cs" />
+    <Compile Include="BookingContext\Resource.cs" />
+    <Compile Include="BookingContext\Events\ResourceCreated.cs" />
+    <Compile Include="BookingContext\Events\ResourceDismissed.cs" />
     <Compile Include="Messaging\IBus.cs" />
     <Compile Include="Messaging\IMessage.cs" />
     <Compile Include="Messaging\IMessageHandler.cs" />
